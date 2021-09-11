@@ -1,17 +1,22 @@
 import sys
 def type_output():
     print('Введите тип операции')
-    print('1.Сложение')
-    print('2.Вычитание')
-    print('3.Умножение')
-    print('4.Транспонирование')
+    print('Сложение')
+    print('Вычитание')
+    print('Умножение')
+    print('Транспонирование')
 def matrix_size_input():
     print('Укажите размеры MxN')
-    M = list(map(int,input().split()))[:2]
-    if len(M) < 2 :
-        print('Размер введен неправильно,повторите')
+    try:
+        M = list(map(int,input().split()))[:2]
+        if len(M) < 2:
+            print('Размер введен неправильно,повторите')
+            return matrix_size_input()
+        else:
+            return M
+    except ValueError:
+        print('Ошибка ввода, повторите заново')
         return matrix_size_input()
-    return M
 def matrix_input(massiv1):
     matrix = []
     print('Введите матрицу')
@@ -92,7 +97,7 @@ def multiply(matrix1,matrix2):
         return matrix
 def main():
     type_output()
-    for row in operation_type_input(input()):
+    for row in operation_type_input(str(input())):
         print(row)
 if __name__=='__main__':
     main()
