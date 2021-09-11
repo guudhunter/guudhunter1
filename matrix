@@ -7,15 +7,22 @@ def type_output():
     print('4.Транспонирование')
 def matrix_size_input():
     print('Укажите размеры MxN')
-    M,N = map(int,input().split())
-    return [M,N]
-def matrix_input(massiv):
+    M = list(map(int,input().split()))[:2]
+    if len(M) < 2 :
+        print('Размер введен неправильно,повторите')
+        return matrix_size_input()
+    return M
+def matrix_input(massiv1):
     matrix = []
     print('Введите матрицу')
-    a = massiv[1]
-    for i in range(massiv[0]):
+    a = massiv1[1]
+    for i in range(massiv1[0]):
         massiv = list(map(int,input().split()))[:a]
-        matrix.append(massiv)
+        if len(massiv) < a:
+            print('Ошибка ввода,попробуйте заново')
+            return matrix_input(massiv1)
+        else:
+            matrix.append(massiv)
     return matrix
 def operation_type_input(vvod):
     if vvod == 'Сложение':
@@ -28,7 +35,7 @@ def operation_type_input(vvod):
         return Transpose(matrix_input(matrix_size_input()))
     else:
         print('Ошибка ввода, введите заново')
-        operation_type_input()
+        operation_type_input(input())
 def addition(matrix1,matrix2):
     if len(matrix1)!= len(matrix2) or len(matrix1[0]) != len(matrix2[0]):
         print('Матрицы нельзя сложить')
@@ -52,7 +59,7 @@ def subtraction(matrix1,matrix2):
         for row in range(len(matrix)):
             for column in range(len(matrix1[0])):
                 matrix[row][column] = matrix1[row][column] - matrix2[row][column]
-        return matrix
+    return matrix
 def Transpose(matrix1):
     matrix = []
     for i in range(len(matrix1[0])):
@@ -80,11 +87,12 @@ def multiply(matrix1,matrix2):
                 for i in range(len(item)):
                     buffer3[i] = buffer1[i]*buffer2[i]
                 buffer.append(sum(buffer3))
-                buffer1 = item
-                buffer2 = item2
             matrix.append(buffer)
             buffer = []       
         return matrix
-type_output()
-for row in operation_type_input(input()):
-    print(row)
+def main():
+    type_output()
+    for row in operation_type_input(input()):
+        print(row)
+if __name__=='__main__':
+    main()
