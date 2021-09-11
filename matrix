@@ -1,0 +1,90 @@
+import sys
+def type_output():
+    print('Введите тип операции')
+    print('1.Сложение')
+    print('2.Вычитание')
+    print('3.Умножение')
+    print('4.Транспонирование')
+def matrix_size_input():
+    print('Укажите размеры MxN')
+    M,N = map(int,input().split())
+    return [M,N]
+def matrix_input(massiv):
+    matrix = []
+    print('Введите матрицу')
+    a = massiv[1]
+    for i in range(massiv[0]):
+        massiv = list(map(int,input().split()))[:a]
+        matrix.append(massiv)
+    return matrix
+def operation_type_input(vvod):
+    if vvod == 'Сложение':
+        return addition(matrix_input(matrix_size_input()),matrix_input(matrix_size_input()))
+    elif vvod == 'Вычитание':
+        return subtraction(matrix_input(matrix_size_input()),matrix_input(matrix_size_input()))
+    elif vvod == 'Умножение':
+        return multiply(matrix_input(matrix_size_input()), Transpose(matrix_input(matrix_size_input()))                                                 )
+    elif vvod == 'Транспонирование':
+        return Transpose(matrix_input(matrix_size_input()))
+    else:
+        print('Ошибка ввода, введите заново')
+        operation_type_input()
+def addition(matrix1,matrix2):
+    if len(matrix1)!= len(matrix2) or len(matrix1[0]) != len(matrix2[0]):
+        print('Матрицы нельзя сложить')
+        sys.exit()
+    else:
+        matrix =[]
+        for i in range(len(matrix1)):
+            matrix.append([0]*len(matrix1[0]))
+        for row in range(len(matrix)):
+            for column in range(len(matrix1[0])):
+                matrix[row][column] = matrix1[row][column] + matrix2[row][column]
+        return matrix
+def subtraction(matrix1,matrix2):
+    if len(matrix1)!= len(matrix2) or len(matrix1[0]) != len(matrix2[0]):
+        print('Матрицу нельзя вычесть')
+        sys.exit()
+    else:
+        matrix =[]
+        for i in range(len(matrix1)):
+            matrix.append([0]*len(matrix1[0]))
+        for row in range(len(matrix)):
+            for column in range(len(matrix1[0])):
+                matrix[row][column] = matrix1[row][column] - matrix2[row][column]
+        return matrix
+def Transpose(matrix1):
+    matrix = []
+    for i in range(len(matrix1[0])):
+        matrix.append([0]*len(matrix1))
+    for item in range(len(matrix1)):
+        for item2 in range(len(matrix1[item])):
+            matrix[item2][item]=matrix1[item][item2]
+    return matrix
+def multiply(matrix1,matrix2):
+    if len(matrix1) != len(matrix2[0]):
+        print('Матрицы нельзя перемножить,начать заново?(Да-Нет)')
+        a = input()
+        if a == 'Да':
+            multiply()
+        else:
+            sys.exit()
+    else:
+        matrix = []
+        for item in matrix1:
+            buffer = []
+            for item2 in matrix2:
+                buffer2 = item2
+                buffer1 = item
+                buffer3 = [0]*len(item)
+                for i in range(len(item)):
+                    buffer3[i] = buffer1[i]*buffer2[i]
+                buffer.append(sum(buffer3))
+                buffer1 = item
+                buffer2 = item2
+            matrix.append(buffer)
+            buffer = []       
+        return matrix
+type_output()
+for row in operation_type_input(input()):
+    print(row)
