@@ -43,8 +43,12 @@ def operation_type_input(vvod):
         operation_type_input(input())
 def addition(matrix1,matrix2):
     if len(matrix1)!= len(matrix2) or len(matrix1[0]) != len(matrix2[0]):
-        print('Матрицы нельзя сложить')
-        sys.exit()
+        print('Матрицы нельзя сложить,начать заново?')
+        vvod = input()
+        if vvod =='Да':
+            return addition(matrix_input(matrix_size_input()),matrix_input(matrix_size_input()))
+        else:
+            sys.exit()
     else:
         matrix =[]
         for i in range(len(matrix1)):
@@ -55,8 +59,12 @@ def addition(matrix1,matrix2):
         return matrix
 def subtraction(matrix1,matrix2):
     if len(matrix1)!= len(matrix2) or len(matrix1[0]) != len(matrix2[0]):
-        print('Матрицу нельзя вычесть')
-        sys.exit()
+        print('Матрицу нельзя вычесть,начать заново?')
+        vvod = input()
+        if vvod =='да':
+            return subtraction(matrix_input(matrix_size_input()),matrix_input(matrix_size_input())) 
+        else:
+            sys.exit()
     else:
         matrix =[]
         for i in range(len(matrix1)):
@@ -78,7 +86,7 @@ def multiply(matrix1,matrix2):
         print('Матрицы нельзя перемножить,начать заново?(Да-Нет)')
         a = input()
         if a == 'Да':
-            multiply()
+            return multiply(matrix_input(matrix_size_input()),Transpose(matrix_input(matrix_size_input())))
         else:
             sys.exit()
     else:
